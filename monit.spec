@@ -6,7 +6,8 @@ Version:	3.3
 Release:	0.%{snap}.1
 Group:		Applications/Console
 License:	GPL
-Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}-%{snap}.tar.gz
+# http://www.tildeslash.com/monit/dist/
+Source0:	%{name}-%{version}-%{snap}.tar.gz
 # Source0-md5:	4da587e3d41b07d081678d5c53b2c597
 Source1:	%{name}.init
 URL:		http://www.tildeslash.com/monit/
