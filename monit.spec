@@ -1,4 +1,4 @@
-%define	snap	20030626
+%define	snap	20030908
 Summary:	Process monitor and restart utility
 Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
 Name:		monit
@@ -8,7 +8,7 @@ Group:		Applications/Console
 License:	GPL
 # http://www.tildeslash.com/monit/dist/
 Source0:	%{name}-%{version}-%{snap}.tar.gz
-# Source0-md5:	3d0a9275e9913de3d8cbf7842c56546e
+# Source0-md5:	94efc952513af389f7a9e562692ccefc
 Source1:	%{name}.init
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
