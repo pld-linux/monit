@@ -48,10 +48,8 @@ case "$1" in
 	;;
   reload)
 	msg_reloading monit
-	busy
 	killproc monit -HUP
 	RETVAL=$?
-	[ $RETVAL = 0 ] && ok || died
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|reload|status}"
