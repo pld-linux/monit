@@ -31,7 +31,8 @@ przestaje odpowiadaæ.
 %setup -q
 
 %build
-%configure
+%configure \
+	--with-ssl-lib-dir=%{_libdir}
 %{__make}
 
 %install
