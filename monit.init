@@ -38,6 +38,7 @@ case "$1" in
 	;;
   status)
 	status monit
+	monit -c /etc/monitrc status
 	exit $?
 	;;
   restart)
