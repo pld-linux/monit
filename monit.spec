@@ -66,4 +66,4 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man?/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}rc
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}rc
