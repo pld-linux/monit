@@ -1,16 +1,13 @@
-%define	snap	20030908
 Summary:	Process monitor and restart utility
 Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
 Name:		monit
-Version:	4.0
-Release:	0.%{snap}.2
+Version:	4.1
+Release:	1
 Group:		Applications/Console
 License:	GPL
-# http://www.tildeslash.com/monit/dist/
-Source0:	%{name}-%{version}-%{snap}.tar.gz
-# Source0-md5:	94efc952513af389f7a9e562692ccefc
+Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
+# Source0-md5:	dd43941901a066bb530adf11b4266e82
 Source1:	%{name}.init
-Patch0:		%{name}-meminfo-vs-kcore.patch
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -32,11 +29,8 @@ przestaje odpowiadaæ.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-./make_man
-./autogen.sh
 %configure
 %{__make}
 
@@ -71,7 +65,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc web/*.html CHANGES.txt CONTRIBUTORS FAQ.txt README*
+%doc doc/*.html CHANGES.txt CONTRIBUTORS FAQ.txt README*
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man?/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
