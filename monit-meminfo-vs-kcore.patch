@@ -24,7 +24,7 @@ diff -urN monit-4.0.org/process/sysdep_LINUX.c monit-4.0/process/sysdep_LINUX.c
  
 -  if ( stat("/proc/kcore", &buf) != 0 ) {
 +  /* read the file */
-+  if (read(mem, buf, sizeof(buf)) < 0) {
++  if (read(memfd, buf, sizeof(buf)) < 0) {
 +      close(memfd);
 +      return FALSE;
 +  }
