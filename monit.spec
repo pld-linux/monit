@@ -72,6 +72,7 @@ fi
 %doc doc/*.html CHANGES.txt CONTRIBUTORS FAQ.txt README*
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}rc
 %attr(751,root,root) %dir %{_sysconfdir}/monit
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/monit/*.monitrc
 %attr(755,root,root) %{_bindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %{_mandir}/man?/*
