@@ -19,7 +19,6 @@ case "$1" in
         if [ ! -f /var/lock/subsys/monit ]; then
 		msg_starting monit
 		daemon monit -c /etc/monitrc -l syslog -d 60
-		pure-config.pl /etc/ftpd/monit.conf --daemonize
 	        RETVAL=$?
     		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/monit
 	else
