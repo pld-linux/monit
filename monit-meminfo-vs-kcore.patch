@@ -1,0 +1,49 @@
+diff -urN monit-4.0.org/process/sysdep_LINUX.c monit-4.0/process/sysdep_LINUX.c
+--- monit-4.0.org/process/sysdep_LINUX.c	2003-09-08 19:20:44.000000000 +0200
++++ monit-4.0/process/sysdep_LINUX.c	2003-09-08 19:20:23.000000000 +0200
+@@ -84,24 +84,37 @@
+  *  @file
+  */
+ 
+-#define PAGE_TO_KBYTE_SHIFT PAGE_SHIFT-10
++#define FREEMEM         "MemFree:"
++#define FREESWAP        "SwapFree:"
+ 
+ int init_process_info_sysdep(void) {
+ 
+-  struct stat buf;
+-  
++  int memfd;
++  char buf[1024], *ptr1, *ptr2;
+ 
+-  /* I hope this is okay hack to get the total memsize. (-: */
++  if ((memfd = open("/proc/meminfo", O_RDONLY)) == -1) {
++      return FALSE;
++  }
+ 
+-  if ( stat("/proc/kcore", &buf) != 0 ) {
++  /* read the file */
++  if (read(memfd, buf, sizeof(buf)) < 0) {
++      close(memfd);
++      return FALSE;
++  }
+ 
+-    return FALSE;
++  close(memfd);
++  
++  ptr1 = strstr(buf, FREEMEM);
++  ptr2 = strstr(buf, FREESWAP);
+ 
++  if (!ptr1 || !ptr2) {
++      return FALSE;
+   }
+ 
+-  num_cpus= sysconf(_SC_NPROCESSORS_CONF);
++  /* we only care about integer values */
++  mem_kbyte_max = atoi(ptr1+strlen(FREEMEM)) /* + atoi(ptr2+strlen(FREESWAP)) */ ;
+ 
+-  mem_kbyte_max = buf.st_size>>10;
++  num_cpus= sysconf(_SC_NPROCESSORS_CONF);
+ 
+   return TRUE;
+ 

@@ -3,13 +3,14 @@ Summary:	Process monitor and restart utility
 Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
 Name:		monit
 Version:	4.0
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 Group:		Applications/Console
 License:	GPL
 # http://www.tildeslash.com/monit/dist/
 Source0:	%{name}-%{version}-%{snap}.tar.gz
 # Source0-md5:	94efc952513af389f7a9e562692ccefc
 Source1:	%{name}.init
+Patch0:		%{name}-meminfo-vs-kcore.patch
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -31,6 +32,7 @@ przestaje odpowiadaæ.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 ./make_man
