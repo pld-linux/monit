@@ -31,7 +31,6 @@ case "$1" in
 	if [ -f /var/lock/subsys/monit ]; then
 		msg_stopping monit
 		killproc monit
-		RETVAL=$?
 		rm -f /var/lock/subsys/monit > /dev/null 2>&1
 	else
 		msg_not_running monit
