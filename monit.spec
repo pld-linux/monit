@@ -2,7 +2,7 @@ Summary:	Process monitor and restart utility
 Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
 Name:		monit
 Version:	4.2.1
-Release:	0.2
+Release:	0.3
 Group:		Applications/Console
 License:	GPL
 Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
@@ -42,10 +42,11 @@ install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,monit}
 	DESTDIR=$RPM_BUILD_ROOT
 
 # include all files provided by services:
-echo "include /etc/monit/*.monitrc" >> monitrc
+echo "include /etc/monit/*.monitrc" >> monitrc.main
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install monitrc $RPM_BUILD_ROOT%{_sysconfdir}
+install monitrc.main $RPM_BUILD_ROOT%{_sysconfdir}/monitrc
+install monitrc $RPM_BUILD_ROOT%{_sysconfdir}/monit/default.monitrc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
