@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# monit		Monitoring daemon
+#
+# chkconfig:	345 99 1
+# description:	Monitoring daemon
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get service config
+[ -f /etc/sysconfig/monit ] && . /etc/sysconfig/monit
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+        if [ ! -f /var/lock/subsys/monit ]; then
+		msg_starting monit
+		daemon monit -c /etc/monitrc -l syslog -d 60
+		pure-config.pl /etc/ftpd/monit.conf --daemonize
+	        RETVAL=$?
+    		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/monit
+	else
+        	msg_already_running monit
+	        exit 1
+	fi
+	;;
+  stop)
+        # Stop daemons.
+	if [ -f /var/lock/subsys/monit ]; then
+                msg_stopping monit
+                killproc monit
+		RETVAL=$?
+                rm -f /var/lock/subsys/monit > /dev/null 2>&1
+        else
+		msg_not_running monit
+	        exit 1
+	fi
+	;;
+  status)
+	status monit
+	RETVAL=$?
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+   reload)
+   	msg_reloading monit
+	killproc monit -HUP
+	RETVAL=$?
+	;;
+  *)
+	msg_usage "$0 {start|stop|reload|restart|status}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+
