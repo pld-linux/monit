@@ -6,6 +6,7 @@ Release:	1
 Group:		Applications/Console
 License:	GPL
 Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
+# Source0-md5:	0e6137b9753b189831a05b980ad28958
 Source1:	%{name}.init
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
