@@ -22,10 +22,9 @@ on a Unix system. It will start specified programs if they are not
 running and restart programs not responding.
 
 %description -l pl
-monit jest narzêdziem do monitorowania demonów oraz podonych programów
-pracuj±cych w systemie Unix. monit zrestartuje podany program w
-momencie gdy przestaje on pracowaæ lub w momencie gdy program
-przestaje odpowiadaæ.
+monit jest narzêdziem do monitorowania demonów oraz podobnych programów
+pracuj±cych w systemie Unix. monit zrestartuje podany program w momencie 
+gdy przestaje on pracowaæ lub w momencie gdy program przestaje odpowiadaæ.
 
 %prep
 %setup -q
