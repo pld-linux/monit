@@ -1,11 +1,12 @@
 diff -urN monit-4.0.org/process/sysdep_LINUX.c monit-4.0/process/sysdep_LINUX.c
 --- monit-4.0.org/process/sysdep_LINUX.c	2003-09-08 19:20:44.000000000 +0200
-+++ monit-4.0/process/sysdep_LINUX.c	2003-09-08 19:20:23.000000000 +0200
-@@ -84,24 +84,37 @@
++++ monit-4.0/process/sysdep_LINUX.c	2003-09-08 19:26:46.000000000 +0200
+@@ -84,24 +84,38 @@
   *  @file
   */
  
 -#define PAGE_TO_KBYTE_SHIFT PAGE_SHIFT-10
++#define	PAGE_TO_KBYTE_SHIFT PAGE_SHIFT-10
 +#define FREEMEM         "MemFree:"
 +#define FREESWAP        "SwapFree:"
  
@@ -23,7 +24,7 @@ diff -urN monit-4.0.org/process/sysdep_LINUX.c monit-4.0/process/sysdep_LINUX.c
  
 -  if ( stat("/proc/kcore", &buf) != 0 ) {
 +  /* read the file */
-+  if (read(memfd, buf, sizeof(buf)) < 0) {
++  if (read(mem, buf, sizeof(buf)) < 0) {
 +      close(memfd);
 +      return FALSE;
 +  }
