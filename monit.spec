@@ -1,16 +1,18 @@
-Name:		monit
 Summary:	Process monitor and restart utility
 Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
+Name:		monit
 Version:	3.2
 Release:	1
-Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
-Source1:	%{name}.init
 Group:		Applications/Console
 License:	GPL
+Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
+Source1:	%{name}.init
 URL:		http://www.tildeslash.com/monit/
-BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	bison
 BuildRequires:	flex
+BuildRequires:	openssl-devel >= 0.9.7
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -33,13 +35,13 @@ przestaje odpowiadaæ.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/rc.d/init.d/
+install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install monitrc $RPM_BUILD_ROOT%{_sysconfdir}/
+install monitrc $RPM_BUILD_ROOT%{_sysconfdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
