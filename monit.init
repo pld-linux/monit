@@ -2,7 +2,7 @@
 #
 # monit		Monitoring daemon
 #
-# chkconfig:	345 99 1
+# chkconfig:	345 99 01
 # description:	Monitoring daemon
 #
 
