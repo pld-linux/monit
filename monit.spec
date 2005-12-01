@@ -1,19 +1,20 @@
 Summary:	Process monitor and restart utility
 Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
 Name:		monit
-Version:	4.5.1
+Version:	4.6
 Release:	1
 Group:		Applications/Console
 License:	GPL
 Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
-# Source0-md5:	0f054ac39822b4be71789d49e4813754
+# Source0-md5:	4e53aa44e4ca264e61c7c401cee4e697
 Source1:	%{name}.init
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	openssl-devel >= 0.9.7d
-PreReq:		rc-scripts
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -22,9 +23,10 @@ on a Unix system. It will start specified programs if they are not
 running and restart programs not responding.
 
 %description -l pl
-monit jest narzêdziem do monitorowania demonów oraz podobnych programów
-pracuj±cych w systemie Unix. monit zrestartuje podany program w momencie 
-gdy przestaje on pracowaæ lub w momencie gdy program przestaje odpowiadaæ.
+monit jest narzêdziem do monitorowania demonów oraz podobnych
+programów pracuj±cych w systemie Unix. monit zrestartuje podany
+program w momencie gdy przestaje on pracowaæ lub w momencie gdy
+program przestaje odpowiadaæ.
 
 %prep
 %setup -q
@@ -42,7 +44,7 @@ install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,monit}
 	DESTDIR=$RPM_BUILD_ROOT
 
 # include all files provided by services:
-echo "include /etc/monit/*.monitrc" >> monitrc.main
+echo "include %{_sysconfdir}/monit/*.monitrc" >> monitrc.main
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install monitrc.main $RPM_BUILD_ROOT%{_sysconfdir}/monitrc
@@ -53,17 +55,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add %{name}
-if [ -f %{_var}/lock/subsys/%{name} ]; then
-	/etc/rc.d/init.d/%{name} restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/%{name} start\" to start %{name} daemon."
-fi
+%service monit restart "Monit Daemon"
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f %{_var}/lock/subsys/%{name} ]; then
-		/etc/rc.d/init.d/%{name} stop 1>&2
-	fi
+	%service monit stop
 	/sbin/chkconfig --del %{name}
 fi
 
