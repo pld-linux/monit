@@ -9,7 +9,8 @@ Group:		Applications/Console
 Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{_ver}.tar.gz
 # Source0-md5:	376bd526ee5577a6f0a842216f8ccf25
 Source1:	%{name}.init
-Patch0:		http://www.tildeslash.com/monit/dist/%{name}-4.8-patch01.patch
+# http://www.tildeslash.com/monit/dist/%{name}-4.8-patch01
+Patch0:		%{name}-4.8-patch01.patch
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
