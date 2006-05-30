@@ -52,7 +52,7 @@ case "$1" in
 		daemon monit -c /etc/monitrc reload
 		RETVAL=$?
 	else
-		msg_not_running monit >&2
+		msg_not_running monit
 		exit 7
 	fi
 	;;
