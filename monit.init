@@ -12,10 +12,7 @@
 # Get service config
 [ -f /etc/sysconfig/monit ] && . /etc/sysconfig/monit
 
-RETVAL=0
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/monit ]; then
 		msg_starting monit
@@ -25,8 +22,9 @@ case "$1" in
 	else
 		msg_already_running monit
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/monit ]; then
 		msg_stopping monit
@@ -35,16 +33,20 @@ case "$1" in
 	else
 		msg_not_running monit
 	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
 	;;
-  status)
-	status monit
-	monit -c /etc/monitrc status
-	exit $?
+  stop)
+  	stop
 	;;
   restart)
-	$0 stop
-	$0 start
-	exit $?
+	stop
+	start
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/monit ]; then
@@ -55,6 +57,11 @@ case "$1" in
 		msg_not_running monit
 		exit 7
 	fi
+	;;
+  status)
+	status monit
+	monit -c /etc/monitrc status
+	exit $?
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
