@@ -11,6 +11,7 @@ Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{_ver}.tar.gz
 Source1:	%{name}.init
 # http://www.tildeslash.com/monit/dist/%{name}-4.8-patch01
 Patch0:		%{name}-4.8-patch01.patch
+Patch1:		%{name}-localhost-http.patch
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -34,6 +35,7 @@ program przestaje odpowiadaæ.
 %prep
 %setup -q -n %{name}-%{_ver}
 %patch0 -p0
+%patch1 -p1
 
 %build
 %configure \
