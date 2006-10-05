@@ -3,7 +3,7 @@ Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
 Name:		monit
 %define		_ver 4.8
 Version:	%{_ver}.1
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Console
 Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{_ver}.tar.gz
