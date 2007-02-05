@@ -16,7 +16,7 @@ start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/monit ]; then
 		msg_starting monit
-		daemon monit -c /etc/monitrc -l syslog -d 60
+		daemon monit -c /etc/monitrc -l syslog -d 60 -s /var/run/monit.state
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/monit
 	else
