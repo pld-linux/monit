@@ -28,7 +28,7 @@ stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/monit ]; then
 		msg_stopping monit
-		daemon monit -c /etc/monitrc quit
+		daemon --waitforname monit --waitfortime 10 monit -c /etc/monitrc quit
 		rm -f /var/lock/subsys/monit > /dev/null 2>&1
 	else
 		msg_not_running monit
