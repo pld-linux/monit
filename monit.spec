@@ -2,13 +2,14 @@ Summary:	Process monitor and restart utility
 Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
 Name:		monit
 Version:	4.8.2
-Release:	1
+Release:	1.1
 License:	GPL
 Group:		Applications/Console
 Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
 # Source0-md5:	e7ad6056c71becf014653f6597d110ca
 Source1:	%{name}.init
 Patch0:		%{name}-localhost-http.patch
+Patch1:		monit-config.patch
 URL:		http://www.tildeslash.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -32,6 +33,7 @@ program przestaje odpowiadaæ.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
@@ -40,17 +42,14 @@ program przestaje odpowiadaæ.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,monit}
+install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,monit},%{_sbindir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# include all files provided by services:
-echo "include %{_sysconfdir}/monit/*.monitrc" >> monitrc.main
-
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install monitrc.main $RPM_BUILD_ROOT%{_sysconfdir}/monitrc
-install monitrc $RPM_BUILD_ROOT%{_sysconfdir}/monit/default.monitrc
+install monitrc $RPM_BUILD_ROOT%{_sysconfdir}/monitrc
+mv $RPM_BUILD_ROOT{%{_bindir},%{_sbindir}}/monit
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -65,12 +64,19 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del %{name}
 fi
 
+%triggerpostun -- %{name} < 4.8.2-1.1
+if [ -f %{_sysconfdir}/monit/default.monitrc.rpmsave ]; then
+	cp -f %{_sysconfdir}/monitrc{,.rpmnew}
+	mv -f %{_sysconfdir}/monit{/default.monitrc.rpmsave,rc}
+	echo 'include /etc/monit/*.monitrc' >> %{_sysconfdir}/monitrc
+	%service -q monit restart
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc doc/*.html CHANGES.txt CONTRIBUTORS FAQ.txt README*
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}rc
-%attr(751,root,root) %dir %{_sysconfdir}/monit
-%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/monit/*.monitrc
-%attr(755,root,root) %{_bindir}/*
+%dir %attr(751,root,root) %{_sysconfdir}/monit
+%attr(755,root,root) %{_sbindir}/monit
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %{_mandir}/man?/*
