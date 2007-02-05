@@ -12,9 +12,20 @@
 # Get service config
 [ -f /etc/sysconfig/monit ] && . /etc/sysconfig/monit
 
+checkconfig() {
+	local out
+	out=$(monit -c /etc/monitrc -t 2>&1)
+	ret=$?
+	if [ $ret != 0 ]; then
+		echo >&2 "$out"
+		exit 1
+	fi
+}
+
 start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/monit ]; then
+		checkconfig
 		msg_starting monit
 		daemon monit -c /etc/monitrc -l syslog -d 60 -s /var/run/monit.state
 		RETVAL=$?
@@ -45,11 +56,13 @@ case "$1" in
   	stop
 	;;
   restart)
+	checkconfig
 	stop
 	start
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/monit ]; then
+		checkconfig
 		msg_reloading monit
 		daemon monit -c /etc/monitrc reload
 		RETVAL=$?
@@ -58,13 +71,17 @@ case "$1" in
 		exit 7
 	fi
 	;;
+  checkconfig)
+	checkconfig
+	echo "Config check OK"
+	;;
   status)
 	status monit
 	monit -c /etc/monitrc status
 	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|checkconfig|status}"
 	exit 3
 esac
 
