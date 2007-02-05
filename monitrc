@@ -31,4 +31,4 @@ set alert root@localhost                        # receive all alerts
 set httpd port 2812 and
      use address localhost  # only accept connection from localhost
      allow localhost        # allow localhost to connect to the server and
-#     allow admin:monit      # require user 'admin' with password 'monit'
+     allow admin:monit      # require user 'admin' with password 'monit'
