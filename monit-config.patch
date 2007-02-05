@@ -1,0 +1,12 @@
+--- monit-4.8.2/monitrc~	2006-01-02 00:01:03.000000000 +0200
++++ monit-4.8.2/monitrc	2007-02-05 13:30:08.932589882 +0200
+@@ -210,7 +210,5 @@
+ ##
+ ## It is possible to include the configuration or its parts from other files or
+ ## directories.
+-#
+-#  include /etc/monit.d/*
+-#
+-#
++
++include /etc/monit/*.monitrc
