@@ -16,7 +16,7 @@ BuildRequires:	flex
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
-Requires:	rc-scripts
+Requires:	rc-scripts >= 0.4.0.15
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
