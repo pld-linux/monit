@@ -1,5 +1,5 @@
 Summary:	Process monitor and restart utility
-Summary(pl):	Narzêdzie do monitorowania procesów i ich restartowania
+Summary(pl.UTF-8):   NarzÄ™dzie do monitorowania procesÃ³w i ich restartowania
 Name:		monit
 Version:	4.8.2
 Release:	1.2
@@ -24,11 +24,11 @@ monit is an utility for monitoring daemons or similar programs running
 on a Unix system. It will start specified programs if they are not
 running and restart programs not responding.
 
-%description -l pl
-monit jest narzêdziem do monitorowania demonów oraz podobnych
-programów pracuj±cych w systemie Unix. monit zrestartuje podany
-program w momencie gdy przestaje on pracowaæ lub w momencie gdy
-program przestaje odpowiadaæ.
+%description -l pl.UTF-8
+monit jest narzÄ™dziem do monitorowania demonÃ³w oraz podobnych
+programÃ³w pracujÄ…cych w systemie Unix. monit zrestartuje podany
+program w momencie gdy przestaje on pracowaÄ‡ lub w momencie gdy
+program przestaje odpowiadaÄ‡.
 
 %prep
 %setup -q
