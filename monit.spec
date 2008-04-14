@@ -2,7 +2,7 @@ Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
 Version:	4.10.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Console
 Source0:	http://www.tildeslash.com/monit/dist/%{name}-%{version}.tar.gz
