@@ -27,7 +27,7 @@ start() {
 	if [ ! -f /var/lock/subsys/monit ]; then
 		checkconfig
 		msg_starting monit
-		daemon monit -c /etc/monitrc -l syslog -d 60 -s /var/run/monit.state
+		daemon /usr/sbin/monit -c /etc/monitrc -l syslog -d 60 -s /var/run/monit.state
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/monit
 	else
@@ -64,7 +64,7 @@ case "$1" in
 	if [ -f /var/lock/subsys/monit ]; then
 		checkconfig
 		msg_reloading monit
-		daemon monit -c /etc/monitrc reload
+		daemon /usr/sbin/monit -c /etc/monitrc reload
 		RETVAL=$?
 	else
 		msg_not_running monit
