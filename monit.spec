@@ -1,5 +1,5 @@
 #
-%define	_beta	beta4
+%define	_beta	beta6
 Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
@@ -8,7 +8,7 @@ Release:	0.%{_beta}.1
 License:	GPL
 Group:		Applications/Console
 Source0:	http://mmonit.com/monit/dist/beta/%{name}-%{version}_%{_beta}.tar.gz
-# Source0-md5:	e48942eb5a6753400acd5bf42d0486d8
+# Source0-md5:	a4d9224d08f885b46b418ede0fad592e
 Source1:	%{name}.init
 Source2:	%{name}rc
 Patch0:		%{name}-localhost-http.patch
@@ -34,7 +34,7 @@ program przestaje odpowiadać.
 
 %prep
 %setup -q -n %{name}-%{version}_%{_beta}
-%patch0 -p1
+#%%patch0 -p1
 
 %build
 %configure \
