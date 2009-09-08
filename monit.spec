@@ -3,13 +3,14 @@ Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
 Version:	5.0.3
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Console
 Source0:	http://mmonit.com/monit/dist/%{name}-%{version}.tar.gz
 # Source0-md5:	dae7859ec10551fc941daeae60dee9d3
 Source1:	%{name}.init
 Source2:	%{name}rc
+Source3:	%{name}.config
 URL:		http://mmonit.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -40,7 +41,7 @@ program przestaje odpowiadać.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,monit},%{_sbindir}}
+install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,monit,sysconfig},%{_sbindir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -48,6 +49,7 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,monit},%{_sbindir}}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 # NOTE: 'include *.monitrc' will fail if nothing matches the glob.
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/monitrc
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/monit
 install monitrc $RPM_BUILD_ROOT%{_sysconfdir}/monit/default.monitrc
 mv $RPM_BUILD_ROOT{%{_bindir},%{_sbindir}}/monit
 
@@ -69,6 +71,7 @@ fi
 %doc doc/*.html CHANGES.txt CONTRIBUTORS FAQ.txt README*
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}rc
 %dir %attr(751,root,root) %{_sysconfdir}/monit
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/monit
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/default.monitrc
 %attr(755,root,root) %{_sbindir}/monit
 %attr(754,root,root) /etc/rc.d/init.d/%{name}

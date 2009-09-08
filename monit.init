@@ -14,7 +14,7 @@
 
 checkconfig() {
 	local out
-	out=$(monit -c /etc/monitrc -t 2>&1)
+	out=$(/usr/sbin/monit -c /etc/monitrc -t 2>&1)
 	ret=$?
 	if [ $ret != 0 ]; then
 		echo >&2 "$out"
@@ -27,7 +27,7 @@ start() {
 	if [ ! -f /var/lock/subsys/monit ]; then
 		checkconfig
 		msg_starting monit
-		daemon /usr/sbin/monit -c /etc/monitrc -l syslog -d 60 -s /var/run/monit.state
+		daemon /usr/sbin/monit -c /etc/monitrc -s /var/run/monit.state $OPTIONS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/monit
 	else
@@ -39,7 +39,7 @@ stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/monit ]; then
 		msg_stopping monit
-		daemon --waitforname monit --waitfortime 10 monit -c /etc/monitrc quit
+		killproc --waitfortime 10 monit
 		rm -f /var/lock/subsys/monit > /dev/null 2>&1
 	else
 		msg_not_running monit
