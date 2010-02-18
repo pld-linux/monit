@@ -2,12 +2,12 @@
 Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
-Version:	5.0.3
-Release:	2
+Version:	5.1
+Release:	1
 License:	GPL v3+
 Group:		Applications/Console
 Source0:	http://mmonit.com/monit/dist/%{name}-%{version}.tar.gz
-# Source0-md5:	dae7859ec10551fc941daeae60dee9d3
+# Source0-md5:	350b73aebf96c1c32017be135ece0a2d
 Source1:	%{name}.init
 Source2:	%{name}rc
 Source3:	%{name}.config
@@ -68,7 +68,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc doc/*.html CHANGES.txt CONTRIBUTORS FAQ.txt README*
+%doc doc/*.html CHANGES.txt README*
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}rc
 %dir %attr(751,root,root) %{_sysconfdir}/monit
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/monit
