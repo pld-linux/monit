@@ -5,7 +5,7 @@ Name:		monit
 Version:	5.1.1
 Release:	2
 License:	GPL v3+
-Group:		Applications/Console
+Group:		Daemons
 Source0:	http://mmonit.com/monit/dist/%{name}-%{version}.tar.gz
 # Source0-md5:	4bbd3845ae1cbab13ec211824e0486dc
 Source1:	%{name}.init
