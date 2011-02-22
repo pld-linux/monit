@@ -2,12 +2,12 @@
 Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
-Version:	5.2.3
+Version:	5.2.4
 Release:	1
 License:	GPL v3+
 Group:		Daemons
 Source0:	http://mmonit.com/monit/dist/%{name}-%{version}.tar.gz
-# Source0-md5:	2772b6f5ad46eb0f73f13e12a26267e1
+# Source0-md5:	5dca6f016c1806d1ac5de5279878fd8f
 Source1:	%{name}.init
 Source2:	%{name}rc
 Source3:	%{name}.config
