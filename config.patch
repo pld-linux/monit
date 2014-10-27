@@ -1,0 +1,31 @@
+--- monit-5.9/monitrc	2014-10-27 17:33:09.741090635 +0200
++++ monit-5.9/monitrc	2014-10-27 17:35:35.171362348 +0200
+@@ -51,7 +51,8 @@
+ ## specified using a comma separator. If the first mail server fails, Monit 
+ # will use the second mail server in the list and so on. By default Monit uses 
+ # port 25 - it is possible to override this with the PORT option.
+-#
++
++set mailserver localhost
+ # set mailserver mail.bar.baz,               # primary mailserver
+ #                backup.bar.baz port 10025,  # backup mailserver on port 10025
+ #                localhost                   # fallback relay
+@@ -108,9 +109,9 @@
+ ## You can set alert recipients whom will receive alerts if/when a 
+ ## service defined in this file has errors. Alerts may be restricted on 
+ ## events by using a filter as in the second example below.
+-#
+-# set alert sysadm@foo.bar                       # receive all alerts
+-#
++
++set alert root@localhost                        # receive all alerts
++
+ ## Do not alert when Monit starts, stops or performs a user initiated action.
+ ## This filter is recommended to avoid getting alerts for trivial cases.
+ #
+@@ -256,3 +257,2 @@
+-#
+-#  include /etc/monit.d/*
+-#
++
++include /etc/monit/*.monitrc

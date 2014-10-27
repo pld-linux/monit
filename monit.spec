@@ -1,16 +1,16 @@
-#
 Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
-Version:	5.3.2
+Version:	5.9
 Release:	1
-License:	GPL v3+
+License:	AGPL v3
 Group:		Daemons
 Source0:	http://mmonit.com/monit/dist/%{name}-%{version}.tar.gz
-# Source0-md5:	8bc077e3c289b2ad54360cc63914c4e5
+# Source0-md5:	808473ebbacda0c5085d7399e507bfda
 Source1:	%{name}.init
 Source2:	%{name}rc
 Source3:	%{name}.config
+Patch0:		config.patch
 URL:		http://mmonit.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -33,25 +33,27 @@ program przestaje odpowiadać.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure \
+	--bindir=%{_sbindir} \
 	--with-ssl-lib-dir=%{_libdir}
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,monit,sysconfig},%{_sbindir}}
-
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,monit,sysconfig}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+cp -p %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/monit
+
+cp -p monitrc $RPM_BUILD_ROOT%{_sysconfdir}/monitrc
 # NOTE: 'include *.monitrc' will fail if nothing matches the glob.
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/monitrc
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/monit
-install monitrc $RPM_BUILD_ROOT%{_sysconfdir}/monit/default.monitrc
-mv $RPM_BUILD_ROOT{%{_bindir},%{_sbindir}}/monit
+# so install dummy config not to remove it with upgrades (avoid .rpmsave)
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/monit/default.monitrc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -68,11 +70,11 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES README*
-%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}rc
-%dir %attr(751,root,root) %{_sysconfdir}/monit
-%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/monit
+%doc CONTRIBUTORS README*
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/monitrc
+%dir %attr(751,root,root) %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/default.monitrc
-%attr(755,root,root) %{_sbindir}/monit
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/monit
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
-%{_mandir}/man?/*
+%attr(755,root,root) %{_sbindir}/monit
+%{_mandir}/man1/monit.1*

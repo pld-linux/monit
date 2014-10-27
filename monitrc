@@ -4,31 +4,3 @@
 ##
 ## Comments begin with a '#' and extend through the end of the line. Keywords
 ## are case insensitive. All path's MUST BE FULLY QUALIFIED, starting with '/'.
-##
-
-include /etc/monit/*.monitrc
-
-###############################################################################
-## Global section
-###############################################################################
-##
-
-## Set list of mailservers for alert delivery. Multiple servers may be 
-## specified using comma separator. By default monit uses port 25 - it is 
-## possible to override it with the PORT option.
-#
-set mailserver localhost               # primary mailserver
-
-## You can set the alert recipients here, which will receive the alert for
-## each service. The event alerts may be restricted using the list.
-#
-set alert root@localhost                        # receive all alerts
-
-## Monit has an embedded webserver, which can be used to view the 
-## configuration, actual services parameters or manage the services using the 
-## web interface.
-#
-set httpd port 2812 and
-     use address localhost  # only accept connection from localhost
-     allow localhost        # allow localhost to connect to the server and
-     allow admin:monit      # require user 'admin' with password 'monit'
