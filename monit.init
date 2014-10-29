@@ -88,8 +88,10 @@ case "$1" in
 	;;
   status)
 	status monit
+	RETVAL=$?
+	# monit status is unreliable (always 0). so use rc-scripts status code
 	monit -c /etc/monitrc status
-	exit $?
+	exit $RETVAL
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|reload|force-reload|checkconfig|status}"
