@@ -1,8 +1,10 @@
-
 #
 # Conditional build:
 %bcond_without	pam		# PAM support
 %bcond_without	ssl		# SSL support
+
+# NOTES:
+# - Release notes: https://mmonit.com/monit/changes/
 
 Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
