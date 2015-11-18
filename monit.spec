@@ -1,3 +1,9 @@
+
+#
+# Conditional build:
+%bcond_without	pam		# PAM support
+%bcond_without	ssl		# SSL support
+
 Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
@@ -14,7 +20,8 @@ Patch0:		config.patch
 URL:		http://mmonit.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
-BuildRequires:	openssl-devel >= 0.9.7d
+%{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7d}
+%{?with_pam:BuildRequires:	pam-devel}
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts >= 0.4.0.15
@@ -38,6 +45,8 @@ program przestaje odpowiadać.
 %build
 %configure \
 	--bindir=%{_sbindir} \
+	%{__with_without ssl} \
+	%{__with_without pam} \
 	--with-ssl-lib-dir=%{_libdir}
 %{__make}
 
