@@ -24,7 +24,7 @@ checkconfig() {
 
 start() {
 	# Check if the service is already running?
-	if [ -f /var/lock/subsys/monit ]; then
+	if [ -f /var/lock/subsys/monit ] && status monit >/dev/null; then
 		msg_already_running monit
 		return
 	fi
