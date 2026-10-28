@@ -1,17 +1,17 @@
-diff -urNp -x '*.orig' monit-5.25.2.org/monitrc monit-5.25.2/monitrc
---- monit-5.25.2.org/monitrc	2018-05-29 21:03:45.000000000 +0200
-+++ monit-5.25.2/monitrc	2021-10-05 22:43:27.407462292 +0200
-@@ -76,7 +76,8 @@ set log syslog
+diff -urNp -x '*.orig' monit-6.0.0.org/monitrc monit-6.0.0/monitrc
+--- monit-6.0.0.org/monitrc	2026-06-15 10:40:52.000000000 +0200
++++ monit-6.0.0/monitrc	2026-10-29 00:39:53.394702267 +0100
+@@ -77,7 +77,8 @@ set log syslog
  ## specified using a comma separator. If the first mail server fails, Monit
- # will use the second mail server in the list and so on. By default Monit uses
- # port 25 - it is possible to override this with the PORT option.
+ ## will use the second mail server in the list and so on. By default Monit uses
+ ## port 25 - it is possible to override this with the PORT option.
 -#
 +
 +set mailserver localhost
  # set mailserver mail.bar.baz,               # primary mailserver
  #                backup.bar.baz port 10025,  # backup mailserver on port 10025
  #                localhost                   # fallback relay
-@@ -137,9 +138,9 @@ set log syslog
+@@ -140,9 +141,9 @@ set log syslog
  ## You can set alert recipients whom will receive alerts if/when a
  ## service defined in this file has errors. Alerts may be restricted on
  ## events by using a filter as in the second example below.
@@ -24,7 +24,7 @@ diff -urNp -x '*.orig' monit-5.25.2.org/monitrc monit-5.25.2/monitrc
  ## Do not alert when Monit starts, stops or performs a user initiated action.
  ## This filter is recommended to avoid getting alerts for trivial cases.
  #
-@@ -300,6 +301,5 @@ set httpd port 2812 and
+@@ -311,6 +312,5 @@ set httpd port 2812 and
  ##
  ## It is possible to include additional configuration parts from other files or
  ## directories.

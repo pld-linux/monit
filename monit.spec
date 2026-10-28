@@ -11,22 +11,23 @@
 Summary:	Process monitor and restart utility
 Summary(pl.UTF-8):	Narzędzie do monitorowania procesów i ich restartowania
 Name:		monit
-Version:	5.25.2
-Release:	3
+Version:	6.0.0
+Release:	1
 License:	AGPL v3
 Group:		Daemons
-Source0:	http://mmonit.com/monit/dist/%{name}-%{version}.tar.gz
-# Source0-md5:	890df599d6c1e9cfbbdd3edbacb7db81
+Source0:	https://mmonit.com/monit/dist/%{name}-%{version}.tar.gz
+# Source0-md5:	5ff8668b131e4b6bbf0f2c9246565f6c
 Source1:	%{name}.init
 Source2:	%{name}rc
 Source3:	%{name}.config
 Patch0:		config.patch
-URL:		http://mmonit.com/monit/
+URL:		https://mmonit.com/monit/
 BuildRequires:	bison
 BuildRequires:	flex
 %{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7d}
 %{?with_pam:BuildRequires:	pam-devel}
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts >= 0.4.0.15
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -49,6 +50,7 @@ program przestaje odpowiadać.
 %build
 %configure \
 	--bindir=%{_sbindir} \
+	--with-piddir=/run \
 	%{__with_without ssl} \
 	%{__with_without pam} \
 	--with-ssl-lib-dir=%{_libdir}
@@ -83,7 +85,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CONTRIBUTORS README*
+%doc CHANGES
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/monitrc
 %dir %attr(751,root,root) %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/default.monitrc
